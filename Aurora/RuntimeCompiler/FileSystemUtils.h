@@ -20,7 +20,7 @@
 // and this can be easily swapped for your own implementation if desired
 #include <string>
 #include <stdio.h>
-#include <stdint.h>
+#include "stdint.h"
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -30,7 +30,9 @@
 	#include <direct.h>
     #include <sys/utime.h>
 	#define WIN32_LEAN_AND_MEAN
+#ifndef NOMINMAX
     #define NOMINMAX
+#endif
     #include <windows.h>
 	#undef GetObject
     #undef GetCurrentTime
@@ -123,7 +125,7 @@ namespace FileSystemUtils
 		{
 			convertedString.resize(requiredSize);
 			WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, &convertedString[0], requiredSize, 0, 0);
-			convertedString.pop_back(); //remove NULL terminator
+			convertedString.resize(convertedString.size()-1); //remove NULL terminator
 		}
 		return convertedString;
 	}
@@ -137,7 +139,7 @@ namespace FileSystemUtils
 		{
 			convertedString.resize(requiredSize);
 			MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, &convertedString[0], requiredSize);
-			convertedString.pop_back(); //remove NULL terminator
+			convertedString.resize(convertedString.size()-1); //remove NULL terminator
 		}
  
 		return convertedString;
@@ -168,7 +170,7 @@ namespace FileSystemUtils
 		{
 			temp.resize( requiredSize );
 			GetCurrentDirectoryW( requiredSize, &temp[0] );
-			temp.pop_back();
+			temp.resize(temp.size()-1);
 		}
 		currPath = _Win32Utf16ToUtf8( temp );
 #else
@@ -601,7 +603,7 @@ namespace FileSystemUtils
 		{
 			shortForm.resize( requiredSize );
 			GetShortPathNameW( longForm.c_str(), &shortForm[0], requiredSize );
-			shortForm.pop_back();
+			shortForm.resize(shortForm.size()-1);
 			return _Win32Utf16ToUtf8( shortForm );
 		}
 		return m_string;

@@ -19,7 +19,7 @@
 
 #ifdef _WIN32
     #include <Windows.h>
-    #include <concrt.h>
+//    #include <concrt.h>
 #else
 #include <pthread.h>
 
