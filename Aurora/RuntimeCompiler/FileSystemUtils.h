@@ -20,7 +20,7 @@
 // and this can be easily swapped for your own implementation if desired
 #include <string>
 #include <stdio.h>
-#include "stdint.h"
+#include <boost/cstdint.hpp>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -86,7 +86,7 @@ namespace FileSystemUtils
 		bool		Remove()			const;
 		filetime_t	GetLastWriteTime()	const;
         void        SetLastWriteTime( filetime_t time_ ) const;
-		uint64_t	GetFileSize()		const;
+        boost::uint64_t	GetFileSize()		const;
 		bool		HasExtension()		const;
 		bool		HasParentPath()		const;
 		std::string Extension()			const;
@@ -396,9 +396,9 @@ namespace FileSystemUtils
 		return false;
 	}
 
-	inline uint64_t	Path::GetFileSize()	const
+	inline boost::uint64_t	Path::GetFileSize()	const
 	{
-		uint64_t filesize = 0;
+		boost::uint64_t filesize = 0;
 		int error = -1;
 #ifdef _WIN32
 		struct _stat64 buffer;

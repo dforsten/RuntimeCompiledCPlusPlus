@@ -366,7 +366,7 @@ bool RuntimeObjectSystem::LoadCompiledModule()
 	// Since the temporary file is created with 0 bytes, loadlibrary can fail with a dialogue we want to prevent. So check size
 	// We pass in the ec value so the function won't throw an exception on error, but the value itself sometimes seems to
 	// be set even without an error, so not sure if it should be relied on.
-	uint64_t sizeOfModule = m_CurrentlyCompilingModuleName.GetFileSize();
+    boost::uint64_t sizeOfModule = m_CurrentlyCompilingModuleName.GetFileSize();
 
 	HMODULE module = 0;
 	if( sizeOfModule )
