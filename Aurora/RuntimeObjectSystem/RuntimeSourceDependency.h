@@ -105,7 +105,11 @@ template<> struct RuntimeSourceDependency<0> : IRuntimeSourceDependencyList
 			{ \
 				if( Num_ == N ) \
 				{ \
-					return { SOURCEFILE, SOURCEEXT, RELATIVEPATHTO }; \
+                    SourceDependencyInfo info; \
+                    info.filename = SOURCEFILE; \
+                    info.extension = SOURCEEXT; \
+                    info.relativeToPath = RELATIVEPATHTO; \
+					return info; \
 				} \
 				else return this->RuntimeSourceDependency< N >::GetSourceDependency( Num_ ); \
 			} \
