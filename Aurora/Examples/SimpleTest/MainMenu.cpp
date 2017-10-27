@@ -61,7 +61,7 @@ class OnClickConsole : public IGUISingleEventListener
 public:
 	virtual void OnEvent( const IGUIEvent& event_info )
 	{
-		PerModuleInterface::g_pSystemTable->pGame->ToggleConsoleGUI();
+		system_table()->pGame->ToggleConsoleGUI();
 	}
 };
 
@@ -70,7 +70,7 @@ class OnClickNewButton : public IGUISingleEventListener
 public:
 	virtual void OnEvent( const IGUIEvent& event_info )
 	{
-		PerModuleInterface::g_pSystemTable->pGame->Reset();
+		system_table()->pGame->Reset();
 	}
 };
 
@@ -80,7 +80,7 @@ class OnClickRestartButton : public IGUISingleEventListener
 public:
 	virtual void OnEvent( const IGUIEvent& event_info )
 	{
-		PerModuleInterface::g_pSystemTable->pGame->Restart();
+		system_table()->pGame->Restart();
 	}
 };
 
@@ -91,7 +91,7 @@ class OnClickTestRCCppButton : public IGUISingleEventListener
 public:
 	virtual void OnEvent( const IGUIEvent& event_info )
 	{
-        PerModuleInterface::g_pSystemTable->pGame->RunRCCppTests(g_bTestFileTracking);
+        system_table()->pGame->RunRCCppTests(g_bTestFileTracking);
 	}
 };
 
@@ -100,7 +100,7 @@ class OnClickUndoRCCppButton : public IGUISingleEventListener
 public:
 	virtual void OnEvent( const IGUIEvent& event_info )
 	{
-        PerModuleInterface::g_pSystemTable->pObjectFactorySystem->UndoObjectConstructorChange();
+        system_table()->pObjectFactorySystem->UndoObjectConstructorChange();
 	}
 };
 
@@ -109,7 +109,7 @@ class OnClickRedoRCCppButton : public IGUISingleEventListener
 public:
 	virtual void OnEvent( const IGUIEvent& event_info )
 	{
-        PerModuleInterface::g_pSystemTable->pObjectFactorySystem->RedoObjectConstructorChange();
+        system_table()->pObjectFactorySystem->RedoObjectConstructorChange();
 	}
 };
 
@@ -189,7 +189,7 @@ class OnAutoCompile : public OnCheckbox
 public:
     virtual void OnCheckChanged( bool bCheck )
     {
-		PerModuleInterface::g_pSystemTable->pRuntimeObjectSystem->SetAutoCompile( bCheck );
+		system_table()->pRuntimeObjectSystem->SetAutoCompile( bCheck );
     }
 };
 
@@ -198,7 +198,7 @@ class OnFastCompile : public OnCheckbox
 public:
     virtual void OnCheckChanged( bool bCheck )
     {
-        PerModuleInterface::g_pSystemTable->pRuntimeObjectSystem->SetFastCompileMode( bCheck );
+        system_table()->pRuntimeObjectSystem->SetFastCompileMode( bCheck );
     }
 };
 
@@ -212,7 +212,7 @@ public:
 		{
 			optlevel = RCCPPOPTIMIZATIONLEVEL_DEBUG;
 		}
-		PerModuleInterface::g_pSystemTable->pRuntimeObjectSystem->SetOptimizationLevel( optlevel );
+		system_table()->pRuntimeObjectSystem->SetOptimizationLevel( optlevel );
 		
     }
 };
@@ -231,7 +231,7 @@ public:
 		g_Speed = (float)atof( Value )*m_MaxSpeed;
 		if( !g_Paused )
 		{
-			PerModuleInterface::g_pSystemTable->pGame->SetSpeed ( g_Speed );
+			system_table()->pGame->SetSpeed ( g_Speed );
 		}
 	}
 
@@ -245,11 +245,11 @@ public:
 		g_Paused = bCheck;
         if( g_Paused )
         {
-			PerModuleInterface::g_pSystemTable->pGame->SetSpeed( 0.0f );
+			system_table()->pGame->SetSpeed( 0.0f );
         }
         else
         {
-    		PerModuleInterface::g_pSystemTable->pGame->SetSpeed( g_Speed );
+    		system_table()->pGame->SetSpeed( g_Speed );
         }
     }
 };
@@ -293,13 +293,13 @@ public:
 
 	void InitWatch()
 	{
-		IFileChangeNotifier* pFileChangeNotifier = PerModuleInterface::g_pSystemTable->pFileChangeNotifier;
+		IFileChangeNotifier* pFileChangeNotifier = system_table()->pFileChangeNotifier;
 
 		// Set watches on the data files we rely on for drawing GUI
-		std::string path = PerModuleInterface::g_pSystemTable->pAssetSystem->GetAssetDirectory();
+		std::string path = system_table()->pAssetSystem->GetAssetDirectory();
 		path += "/GUI/menu.rml";
 		pFileChangeNotifier->Watch(path.c_str(), this);
-		path = PerModuleInterface::g_pSystemTable->pAssetSystem->GetAssetDirectory();
+		path = system_table()->pAssetSystem->GetAssetDirectory();
 		path += "/GUI/menu.rcss";
 		pFileChangeNotifier->Watch(path.c_str(), this);
 	}
@@ -308,7 +308,7 @@ public:
 	void InitDocument(bool forceLoad)
 	{
 		// Load and show the menu
-		IGUISystem* pGUI = PerModuleInterface::g_pSystemTable->pGUISystem;
+		IGUISystem* pGUI = system_table()->pGUISystem;
 
 		if (forceLoad)
 		{

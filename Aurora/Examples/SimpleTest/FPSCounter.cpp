@@ -78,7 +78,7 @@ public:
 		{
 			// Refreshing the content of the counter is not itself free, so we impose some limit
 			// Since deltaTime is game time, which can be paused or slowed down, we update with frame time
-			double fSmoothFrameTime = PerModuleInterface::g_pSystemTable->pTimeSystem->GetSmoothFrameDuration();
+			double fSmoothFrameTime = system_table()->pTimeSystem->GetSmoothFrameDuration();
 			m_fTimeToNextUpdate -= fSmoothFrameTime;
 			if (m_fTimeToNextUpdate <= 0.0f)
 			{
@@ -111,13 +111,13 @@ private:
 
 	void InitWatch()
 	{
-		IFileChangeNotifier* pFileChangeNotifier = PerModuleInterface::g_pSystemTable->pFileChangeNotifier;
+		IFileChangeNotifier* pFileChangeNotifier = system_table()->pFileChangeNotifier;
 
 		// Set watches on the data files we rely on for drawing GUI
-		std::string path = PerModuleInterface::g_pSystemTable->pAssetSystem->GetAssetDirectory();
+		std::string path = system_table()->pAssetSystem->GetAssetDirectory();
 		path += "/GUI/fps-counter.rml";
 		pFileChangeNotifier->Watch(path.c_str(), this);
-		path = PerModuleInterface::g_pSystemTable->pAssetSystem->GetAssetDirectory();
+		path = system_table()->pAssetSystem->GetAssetDirectory();
 		path += "/GUI/fps-counter.rcss";
 		pFileChangeNotifier->Watch(path.c_str(), this);
 	}
@@ -133,7 +133,7 @@ private:
 		}
 
 		// Load and show the fps counter
-		SystemTable* pSystemTable = PerModuleInterface::g_pSystemTable;
+		SystemTable* pSystemTable = system_table();
 		IGUISystem* pGUI = pSystemTable->pGUISystem;
 
 		if (forceLoad)

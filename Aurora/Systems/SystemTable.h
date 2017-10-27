@@ -21,6 +21,7 @@
 #define SYSTEMTABLE_INCLUDED
 
 #include "Definitions.inl"
+#include "../RuntimeObjectSystem/ObjectInterfacePerModule.h"
 
 class RocketLogSystem;
 
@@ -52,5 +53,10 @@ struct SystemTable
 		, pGame(0)
 	{}
 };
+
+inline SystemTable* system_table()
+{
+    return PerModuleInterface::GetGlobalTable<SystemTable>();
+}
 
 #endif // SYSTEMTABLE_INCLUDED

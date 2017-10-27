@@ -124,7 +124,7 @@ public:
 			
 			// Check if window has re-szie and move splash screen
 			float currWindowSize[2];
-			PerModuleInterface::g_pSystemTable->pGame->GetWindowSize( currWindowSize[0], currWindowSize[1] );
+			system_table()->pGame->GetWindowSize( currWindowSize[0], currWindowSize[1] );
 			if( currWindowSize[0] != m_WindowSize[0] || currWindowSize[1] != m_WindowSize[1] )
 			{
 				m_WindowSize[0] = currWindowSize[0];
@@ -204,7 +204,7 @@ public:
 			m_pSplashElement->SetAttribute("src", imageFile);
 
 			// Position element correctly so that it is centered
-			PerModuleInterface::g_pSystemTable->pGame->GetWindowSize( m_WindowSize[0], m_WindowSize[1] );
+			system_table()->pGame->GetWindowSize( m_WindowSize[0], m_WindowSize[1] );
 
 			char buff[16];
 			int left;
@@ -251,13 +251,13 @@ private:
 
 	void InitWatch()
 	{
-		IFileChangeNotifier* pFileChangeNotifier = PerModuleInterface::g_pSystemTable->pFileChangeNotifier;
+		IFileChangeNotifier* pFileChangeNotifier = system_table()->pFileChangeNotifier;
 
 		// Set watches on the data files we rely on for drawing GUI
-		std::string path = PerModuleInterface::g_pSystemTable->pAssetSystem->GetAssetDirectory();
+		std::string path = system_table()->pAssetSystem->GetAssetDirectory();
 		path += "/GUI/splashscreen.rml";
 		pFileChangeNotifier->Watch(path.c_str(), this);
-		path = PerModuleInterface::g_pSystemTable->pAssetSystem->GetAssetDirectory();
+		path = system_table()->pAssetSystem->GetAssetDirectory();
 		path += "/GUI/splashscreen.rcss";
 		pFileChangeNotifier->Watch(path.c_str(), this);
 	}
@@ -279,7 +279,7 @@ private:
 		}
 
 		// Load and show the splashscreen
-		IGUISystem* pGUI = PerModuleInterface::g_pSystemTable->pGUISystem;
+		IGUISystem* pGUI = system_table()->pGUISystem;
 
 		if (forceLoad)
 		{

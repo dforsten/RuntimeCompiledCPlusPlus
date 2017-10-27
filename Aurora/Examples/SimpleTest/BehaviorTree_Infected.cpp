@@ -67,6 +67,7 @@ public:
 		{
 			pGameObject->SetBehavior( m_Behavior_Infected_Idle );
 		}	
+
 	}
 
 	virtual void Init( bool isFirstInit )

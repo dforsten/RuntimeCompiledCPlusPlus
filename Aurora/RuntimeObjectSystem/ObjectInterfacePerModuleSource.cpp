@@ -20,7 +20,7 @@
 
 PerModuleInterface* PerModuleInterface::ms_pObjectManager = NULL;
 
-SystemTable* PerModuleInterface::g_pSystemTable = 0;
+void* PerModuleInterface::g_pGlobalTable = 0;
 
 extern "C" 
 #ifdef _WIN32
@@ -61,9 +61,9 @@ void PerModuleInterface::SetProjectIdForAllConstructors( unsigned short projectI
 }
 
 
-void PerModuleInterface::SetSystemTable( SystemTable* pSystemTable )
+void PerModuleInterface::SetGlobalTable( void* pGlobalTable )
 {
-	g_pSystemTable = pSystemTable;
+	g_pGlobalTable = pGlobalTable;
 }
 
 PerModuleInterface::PerModuleInterface()

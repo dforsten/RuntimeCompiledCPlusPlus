@@ -24,7 +24,7 @@ public:
 
 	virtual void StartBehavior()
 	{
-		m_pEntitySystem = PerModuleInterface::g_pSystemTable->pEntitySystem;
+		m_pEntitySystem = system_table()->pEntitySystem;
 
 		m_pBBCommon->time_to_next_attack = m_pGameObjectParams->attack_speed;
 	}
@@ -54,6 +54,8 @@ public:
 				}
 			}
 		}
+
+
 
 		if (!pGameObject)
 		{

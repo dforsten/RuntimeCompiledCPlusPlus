@@ -47,7 +47,7 @@ template<typename T> void SerializeIObjectPtr( ISimpleSerializer* pSerializer, c
 	{
 		ObjectId id;
 		pSerializer->SerializeProperty( propertyName, id);
-		IObject* pObj = PerModuleInterface::g_pSystemTable->pObjectFactorySystem->GetObject( id );
+		IObject* pObj = system_table()->pObjectFactorySystem->GetObject( id );
 		if( pObj ) 
 		{
 			pObj->GetInterface( iid, (void**)ppObj );
@@ -72,7 +72,7 @@ struct IObjectUtils
 	// Should be called between construction of object, and call to object Init() method
 	static IAUEntity* CreateEntityForObject(IObject *pObj, const char* entityName, bool bEntityNameIsUnique=true)
 	{
-		IEntitySystem* pEntitySystem = PerModuleInterface::g_pSystemTable->pEntitySystem;
+		IEntitySystem* pEntitySystem = system_table()->pEntitySystem;
 
 		AUEntityId id = 0;
 		if (bEntityNameIsUnique)
@@ -98,7 +98,7 @@ struct IObjectUtils
 
 	static IObjectConstructor* GetConstructor( const char* objectType )
 	{
-		return  PerModuleInterface::g_pSystemTable->pObjectFactorySystem->GetConstructor( objectType );
+		return  system_table()->pObjectFactorySystem->GetConstructor( objectType );
 	}
 
 	static ConstructorId GetConstructorId( const char* objectType )
@@ -127,7 +127,7 @@ struct IObjectUtils
 		}
 		else
 		{
-			PerModuleInterface::g_pSystemTable->pLogSystem->Log( eLV_ERRORS, "CreateObjectAndEntity: Could not find constructor: %s\n", objectType  );
+			system_table()->pLogSystem->Log( eLV_ERRORS, "CreateObjectAndEntity: Could not find constructor: %s\n", objectType  );
 			pObj = 0;
 		}
 		return pObj;
@@ -144,7 +144,7 @@ struct IObjectUtils
 		}
 		else
 		{
-			PerModuleInterface::g_pSystemTable->pLogSystem->Log( eLV_ERRORS, "CreateObject: Could not find constructor: %s\n", objectType  );
+			system_table()->pLogSystem->Log( eLV_ERRORS, "CreateObject: Could not find constructor: %s\n", objectType  );
 			pObj = 0;
 		}
 		return pObj;
@@ -158,7 +158,7 @@ struct IObjectUtils
 			if( 0 == *pInterface )
 			{
 				//mismatched type
-				PerModuleInterface::g_pSystemTable->pLogSystem->Log( eLV_ERRORS, "CreateObject: requested objectType does not support interface %s\n", objectType  );
+				system_table()->pLogSystem->Log( eLV_ERRORS, "CreateObject: requested objectType does not support interface %s\n", objectType  );
 				delete pObj;
 			}
 		}
@@ -171,7 +171,7 @@ struct IObjectUtils
 	
 	static IObjectConstructor* GetConstructor( ConstructorId constructor )
 	{
-		return  PerModuleInterface::g_pSystemTable->pObjectFactorySystem->GetConstructor( constructor );
+		return  system_table()->pObjectFactorySystem->GetConstructor( constructor );
 	}
 
 
@@ -186,7 +186,7 @@ struct IObjectUtils
 		}
 		else
 		{
-			PerModuleInterface::g_pSystemTable->pLogSystem->Log( eLV_ERRORS, "CreateObject: Could not find constructor\n"  );
+			system_table()->pLogSystem->Log( eLV_ERRORS, "CreateObject: Could not find constructor\n"  );
 		}
 		return pObj;
 	}
@@ -200,7 +200,7 @@ struct IObjectUtils
 			if( 0 == *pInterface )
 			{
 				//mismatched type
-				PerModuleInterface::g_pSystemTable->pLogSystem->Log( eLV_ERRORS, "CreateObject: requested objectType does not support interface\n"  );
+				system_table()->pLogSystem->Log( eLV_ERRORS, "CreateObject: requested objectType does not support interface\n"  );
 				delete pObj;
 			}
 		}
@@ -213,7 +213,7 @@ struct IObjectUtils
 
 	template <class T> static void GetObject( T **pInterface, ObjectId id )
 	{
-		IObjectFactorySystem* pFactorySystem = PerModuleInterface::g_pSystemTable->pObjectFactorySystem;
+		IObjectFactorySystem* pFactorySystem = system_table()->pObjectFactorySystem;
 		IObject* pObj = pFactorySystem->GetObject(id);
 		if (pObj)
 			pObj->GetInterface( T::s_interfaceID, (void**)pInterface );
@@ -225,7 +225,7 @@ struct IObjectUtils
 
 	static bool UniqueObjectExists( const char* objectType )
 	{
-		IObjectConstructor* pConstructor = PerModuleInterface::g_pSystemTable->pObjectFactorySystem->GetConstructor( objectType );
+		IObjectConstructor* pConstructor = system_table()->pObjectFactorySystem->GetConstructor( objectType );
 		return ( pConstructor ? pConstructor->GetNumberConstructedObjects() == 1 : false );
 	}
 
@@ -244,7 +244,7 @@ struct IObjectUtils
 		IObject* pObj = 0;
 		if (!UniqueObjectExists(objectType))
 		{
-			IObjectConstructor* pConstructor = PerModuleInterface::g_pSystemTable->pObjectFactorySystem->GetConstructor( objectType );
+			IObjectConstructor* pConstructor = system_table()->pObjectFactorySystem->GetConstructor( objectType );
 			if (pConstructor)
 			{
 				pObj = pConstructor->Construct();
@@ -252,7 +252,7 @@ struct IObjectUtils
 			}
 			else
 			{
-				PerModuleInterface::g_pSystemTable->pLogSystem->Log( eLV_ERRORS, "CreateUniqueObject: Could not find constructor: %s\n", objectType  );
+				system_table()->pLogSystem->Log( eLV_ERRORS, "CreateUniqueObject: Could not find constructor: %s\n", objectType  );
 			}
 		}
 		return pObj;
@@ -263,7 +263,7 @@ struct IObjectUtils
 		IObject* pObj = 0;
 		if (UniqueObjectExists(objectType))
 		{
-			IObjectConstructor* pConstructor = PerModuleInterface::g_pSystemTable->pObjectFactorySystem->GetConstructor( objectType );
+			IObjectConstructor* pConstructor = system_table()->pObjectFactorySystem->GetConstructor( objectType );
 			pObj = pConstructor->GetConstructedObject(0);
 		}
 		return pObj;
@@ -283,7 +283,7 @@ struct IObjectUtils
 
 	static void DestroyObjectAndEntity( AUEntityId entityId )
 	{
-		IEntitySystem* pEntitySystem = PerModuleInterface::g_pSystemTable->pEntitySystem;
+		IEntitySystem* pEntitySystem = system_table()->pEntitySystem;
 		IAUEntity* pEntity = pEntitySystem->Get(entityId);
 		if (pEntity)
 		{

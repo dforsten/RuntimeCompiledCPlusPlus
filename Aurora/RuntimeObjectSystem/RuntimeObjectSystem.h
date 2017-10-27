@@ -48,7 +48,7 @@ public:
 	virtual ~RuntimeObjectSystem();
 
 	// Initialise RuntimeObjectSystem. pLogger should be deleted by creator
-	virtual bool Initialise( ICompilerLogger * pLogger, SystemTable* pSystemTable );
+	virtual bool Initialise( ICompilerLogger * pLogger, void* pGlobalTable );
 
 	virtual bool GetIsCompiling()
 	{
@@ -159,7 +159,7 @@ private:
 
 	// Members set in initialise
 	ICompilerLogger*		m_pCompilerLogger;
-	SystemTable*			m_pSystemTable;
+	void*			        m_pGlobalTable;
 
 	// Members created by this system
 	IObjectFactorySystem*	m_pObjectFactorySystem;

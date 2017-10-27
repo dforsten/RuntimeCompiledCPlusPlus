@@ -38,17 +38,18 @@ class PerModuleInterface : public IPerModuleInterface
 {
 public:
 	static PerModuleInterface*  GetInstance();
-	static SystemTable*			g_pSystemTable;
+	static void*			    g_pGlobalTable;
 
 	void AddConstructor( IObjectConstructor* pConstructor );
 
 	virtual std::vector<IObjectConstructor*>& GetConstructors();
     virtual void SetProjectIdForAllConstructors( unsigned short projectId_ );
-	virtual void SetSystemTable( SystemTable* pSystemTable );
+	virtual void SetGlobalTable( void* pGlobalTable );
 
-	SystemTable* GetSystemTable()
+    template<typename T>
+	static T* GetGlobalTable()
 	{
-		return g_pSystemTable;
+		return (T*)g_pGlobalTable;
 	}
 
 	virtual const std::vector<const char*>& GetRequiredSourceFiles() const;

@@ -191,7 +191,7 @@ public:
 
 	virtual void DestroyGameObject( const char* name )
 	{
-		IEntitySystem* pEntitySystem = PerModuleInterface::g_pSystemTable->pEntitySystem;
+		IEntitySystem* pEntitySystem = system_table()->pEntitySystem;
 		IAUEntity* pEnt = pEntitySystem->Get(name);
 		if (pEnt)
 		{
@@ -263,7 +263,7 @@ private:
 	AUVec3f GetSpawnPosition( EGameObject type )
 	{
 		float width, height;
-		PerModuleInterface::g_pSystemTable->pGame->GetWindowSize( width, height );
+		system_table()->pGame->GetWindowSize( width, height );
 		float edgeMargin = 0.05f;
 
 		// Spawn WBC in bottom quarter of screen, RBC in middle quarter, and Virus and Infected Cell
@@ -363,7 +363,7 @@ private:
 
 	void DoDestroyGameObject( ObjectId id )
 	{
-		IObjectFactorySystem* pFactory = PerModuleInterface::g_pSystemTable->pObjectFactorySystem;
+		IObjectFactorySystem* pFactory = system_table()->pObjectFactorySystem;
 		IObject* pObj = pFactory->GetObject(id);
 		if (pObj)
 		{
@@ -482,7 +482,7 @@ private:
 
 	void PreloadModels()
 	{
-		IAssetSystem* pAssetSystem = PerModuleInterface::g_pSystemTable->pAssetSystem;
+		IAssetSystem* pAssetSystem = system_table()->pAssetSystem;
 
 		for (int i=0; i<EGO_COUNT; ++i)
 		{

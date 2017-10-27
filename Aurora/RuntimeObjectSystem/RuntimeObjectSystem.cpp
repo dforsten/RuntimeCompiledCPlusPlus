@@ -56,7 +56,7 @@ static Path GetIntermediateFolder( Path basePath_, RCppOptimizationLevel optimiz
 
 RuntimeObjectSystem::RuntimeObjectSystem()
 	: m_pCompilerLogger(0)
-	, m_pSystemTable(0)
+	, m_pGlobalTable(0)
 	, m_pObjectFactorySystem(new ObjectFactorySystem())
 	, m_pFileChangeNotifier(new FileChangeNotifier())
 	, m_pBuildTool(new BuildTool())
@@ -84,10 +84,10 @@ RuntimeObjectSystem::~RuntimeObjectSystem()
 }
 
 
-bool RuntimeObjectSystem::Initialise( ICompilerLogger * pLogger, SystemTable* pSystemTable  )
+bool RuntimeObjectSystem::Initialise( ICompilerLogger * pLogger, void* pGlobalTable  )
 {
 	m_pCompilerLogger = pLogger;
-	m_pSystemTable = pSystemTable;
+	m_pGlobalTable = pGlobalTable;
 
 	m_pBuildTool->Initialise(m_pCompilerLogger);
 
@@ -429,7 +429,7 @@ bool RuntimeObjectSystem::LoadCompiledModule()
 void RuntimeObjectSystem::SetupObjectConstructors(IPerModuleInterface* pPerModuleInterface)
 {
     // Set system Table
-    pPerModuleInterface->SetSystemTable( m_pSystemTable );
+    pPerModuleInterface->SetGlobalTable( m_pGlobalTable );
 
 	// get hold of the constructors
 	const std::vector<IObjectConstructor*> &objectConstructors = pPerModuleInterface->GetConstructors();

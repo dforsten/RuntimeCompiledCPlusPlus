@@ -85,7 +85,7 @@ private:
 		IObjectUtils::CreateUniqueObjectAndEntity( "BehaviorTreeManager", "BehaviorTreeManager" );
 		IObjectUtils::CreateUniqueObjectAndEntity( "BlackboardManager", "BlackboardManager" );
 
-		PerModuleInterface::g_pSystemTable->pLogSystem->Log(eLV_COMMENTS, "Created Objects\n");
+		system_table()->pLogSystem->Log(eLV_COMMENTS, "Created Objects\n");
 	}
 };
 

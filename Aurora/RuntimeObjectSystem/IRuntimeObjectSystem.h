@@ -69,7 +69,7 @@ struct IRuntimeObjectSystem : public ITestBuildNotifier
 {
 	// Initialise RuntimeObjectSystem. pLogger and pSystemTable should be deleted by creator. 
 	// Both pLogger and pSystemTable can be 0
-	virtual bool Initialise( ICompilerLogger * pLogger, SystemTable* pSystemTable  ) = 0;
+	virtual bool Initialise( ICompilerLogger * pLogger, void* pGlobalTable  ) = 0;
 
 	virtual bool GetIsCompiling() = 0;
 	virtual bool GetIsCompiledComplete() = 0;

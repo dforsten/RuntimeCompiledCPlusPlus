@@ -64,7 +64,7 @@ public:
 	{		
 		if (m_pRenMesh)
 		{
-			PerModuleInterface::g_pSystemTable->pAssetSystem->DestroyRenderableMesh(m_pRenMesh);
+			system_table()->pAssetSystem->DestroyRenderableMesh(m_pRenMesh);
 		}
 
 		if( m_pEntity )
@@ -188,7 +188,7 @@ public:
 	{
 		std::string path = "/Models/"; //directories relative to asset dir
 		path += file;
-		m_pRenMesh = PerModuleInterface::g_pSystemTable->pAssetSystem->CreateRenderableMeshFromFile( path.c_str() );
+		m_pRenMesh = system_table()->pAssetSystem->CreateRenderableMeshFromFile( path.c_str() );
 		m_pEntity->SetRenderable( m_pRenMesh );
 	}
 
